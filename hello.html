@@ -2,28 +2,18 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Tunkable WebViewer Test</title>
+    <title>Tunkable WebViewer Auto Reply</title>
     <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js"></script>
     <script>
-      // მესიჯის მიღება აპიდან
+      // როცა აპიდან მესიჯი მოვა, დაუყოვნებლივ იგზავნება უკან იგივე ტექსტი
       ThunkableWebviewerExtension.receiveMessage(function(message) {
-        // პასუხი გამოჩნდება ვებგვერდზე (alert-ის ნაცვლად label-ში)
-        document.getElementById("response").innerText = "App response: " + message;
+        document.getElementById("response").innerText = "App said: " + message;
+        ThunkableWebviewerExtension.postMessage("Echo: " + message);
       });
-
-      // მესიჯის გაგზავნა აპში
-      function sendMessageToApp() {
-        const input = document.getElementById("userInput").value.trim();
-        // გაგზავნის აპში
-        ThunkableWebviewerExtension.postMessage(input);
-      }
     </script>
   </head>
   <body>
-    <h2>Tunkable WebViewer Test</h2>
-    <input type="text" id="userInput" placeholder="Type something...">
-    <button onclick="sendMessageToApp()">Send</button>
-    <p id="response"></p>
+    <h2>Tunkable Auto Reply Test</h2>
+    <p id="response">Waiting for message...</p>
   </body>
 </html>
-
