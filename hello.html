@@ -2,31 +2,49 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Thunkable Auto Reply</title>
-  <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js"></script>
+  <title>Thunkable Auto Reply Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #response { margin-top: 10px; padding: 10px; border: 1px solid #ccc; width: 300px; }
+    input, button { padding: 5px; margin-top: 5px; }
+  </style>
 </head>
 <body>
-  <h2>Thunkable Auto Reply Test</h2>
-  <p id="response">Waiting for message...</p>
+  <h2>Thunkable Auto Reply Simulator</h2>
+
+  <label for="messageInput">Type a message:</label><br>
+  <input type="text" id="messageInput" placeholder="Type here...">
+  <button id="sendBtn">Send</button>
+
+  <div id="response">Response will appear here</div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      ThunkableWebviewerExtension.receiveMessage(function(message) {
-        document.getElementById("response").innerText = "App said: " + message;
+    // ფუნქცია, რომელიც ამუშავებს "auto reply" ლოგიკას
+    function handleMessage(message) {
+      const responseDiv = document.getElementById("response");
+      responseDiv.innerText = "App said: " + message;
 
-        // ავტომატური პასუხი
-        if (message === "hello") {
-          ThunkableWebviewerExtension.postMessage("Hi Thunkable");
-        } else {
-          // სხვა მესიჯებზე გამოაგზავნოს "error"
-          ThunkableWebviewerExtension.postMessage("error");
-        }
-      });
+      // ავტომატური პასუხი
+      if (message === "hello") {
+        responseDiv.innerText += "\nResponse: Hi Thunkable";
+      } else {
+        responseDiv.innerText += "\nResponse: error";
+      }
+    }
 
-      // ტესტური შეტყობინება WebViewer-ის გაშვების შემდეგ
-      setTimeout(function() {
-        ThunkableWebviewerExtension.postMessage("WebView loaded successfully");
-      }, 1000);
+    // Send ღილაკზე კლიკი ან Enter კლავიატურით
+    document.getElementById("sendBtn").addEventListener("click", function() {
+      const msg = document.getElementById("messageInput").value.trim();
+      if(msg) handleMessage(msg);
+      document.getElementById("messageInput").value = "";
+    });
+
+    document.getElementById("messageInput").addEventListener("keydown", function(e) {
+      if(e.key === "Enter") {
+        const msg = this.value.trim();
+        if(msg) handleMessage(msg);
+        this.value = "";
+      }
     });
   </script>
 </body>
