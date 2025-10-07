@@ -2,37 +2,34 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Thunkable Auto Reply Test</title>
+  <title>Hello Tunkable Test</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
-    #response { margin-top: 10px; padding: 10px; border: 1px solid #ccc; width: 300px; }
+    #response { margin-top: 10px; padding: 10px; border: 1px solid #ccc; width: 300px; white-space: pre-line; }
     input, button { padding: 5px; margin-top: 5px; }
   </style>
 </head>
 <body>
-  <h2>Thunkable Auto Reply Simulator</h2>
+  <h2>Hello Tunkable Test</h2>
 
-  <label for="messageInput">Type a message:</label><br>
-  <input type="text" id="messageInput" placeholder="Type here...">
+  <label for="messageInput">Type something...</label><br>
+  <input type="text" id="messageInput" placeholder="Type something...">
   <button id="sendBtn">Send</button>
 
   <div id="response">Response will appear here</div>
 
   <script>
-    // ფუნქცია, რომელიც ამუშავებს "auto reply" ლოგიკას
     function handleMessage(message) {
       const responseDiv = document.getElementById("response");
       responseDiv.innerText = "App said: " + message;
 
-      // ავტომატური პასუხი
-      if (message === "hello") {
+      if (message.toLowerCase() === "hello") {
         responseDiv.innerText += "\nResponse: Hi Thunkable";
       } else {
         responseDiv.innerText += "\nResponse: error";
       }
     }
 
-    // Send ღილაკზე კლიკი ან Enter კლავიატურით
     document.getElementById("sendBtn").addEventListener("click", function() {
       const msg = document.getElementById("messageInput").value.trim();
       if(msg) handleMessage(msg);
