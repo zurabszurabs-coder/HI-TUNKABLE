@@ -2,18 +2,37 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Tunkable WebViewer Auto Reply</title>
+    <title>Thunkable WebViewer Auto Reply</title>
     <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js"></script>
     <script>
-      // როცა აპიდან მესიჯი მოვა, დაუყოვნებლივ იგზავნება უკან იგივე ტექსტი
-      ThunkableWebviewerExtension.receiveMessage(function(message) {
-        document.getElementById("response").innerText = "App said: " + message;
-        ThunkableWebviewerExtension.postMessage("Echo: " + message);
+      // დავრწმუნდეთ, რომ extension ჩაიტვირთა
+      document.addEventListener("DOMContentLoaded", function() {
+        // როცა აპიდან მესიჯი მოვა, დაუყოვნებლივ იგზავნება უკან იგივე ტექსტი
+        ThunkableWebviewerExtension.receiveMessage(function(message) {
+          console.log("Message received:", message); // დებაგინგისთვის
+          document.getElementById("response").innerText = "App said: " + message;
+          ThunkableWebviewerExtension.postMessage("Echo: " + message);
+        });
+        
+        // ვცდილობთ თავიდანვე გავაგზავნოთ მესიჯი, რომ დავრწმუნდეთ რომ კომუნიკაცია მუშაობს
+        setTimeout(function() {
+          ThunkableWebviewerExtension.postMessage("WebView loaded successfully");
+        }, 1000);
       });
     </script>
   </head>
   <body>
-    <h2>Tunkable Auto Reply Test</h2>
+    <h2>Thunkable Auto Reply Test</h2>
     <p id="response">Waiting for message...</p>
+    
+    <script>
+      // ალტერნატიული მეთოდი - შევამოწმოთ არის თუ არა extension ხელმისაწვდომი
+      if (typeof ThunkableWebviewerExtension !== 'undefined') {
+        console.log("Thunkable extension is available");
+      } else {
+        console.log("Thunkable extension is NOT available");
+        document.getElementById("response").innerText = "Error: Extension not loaded";
+      }
+    </script>
   </body>
 </html>
