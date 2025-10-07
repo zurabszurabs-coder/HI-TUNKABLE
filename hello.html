@@ -2,40 +2,28 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello Tunkable Test</title>
+    <title>Tunkable WebViewer Test</title>
     <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js"></script>
     <script>
       // მესიჯის მიღება აპიდან
       ThunkableWebviewerExtension.receiveMessage(function(message) {
-        alert("Message from App: " + message);
+        // პასუხი გამოჩნდება ვებგვერდზე (alert-ის ნაცვლად label-ში)
+        document.getElementById("response").innerText = "App response: " + message;
       });
 
       // მესიჯის გაგზავნა აპში
       function sendMessageToApp() {
         const input = document.getElementById("userInput").value.trim();
-        ThunkableWebviewerExtension.postMessage(input);
-      }
-
-      // ასევე, შიდა პასუხი ვებსაიტზე
-      function respondToMessage() {
-        const input = document.getElementById("userInput").value.trim().toLowerCase();
-        const output = document.getElementById("response");
-
-        if (input === "hello") {
-          output.innerText = "Hi Tunkable!";
-        } else {
-          output.innerText = "Type 'hello' to get a response.";
-        }
-
-        // აპში მესიჯის გაგზავნა
+        // გაგზავნის აპში
         ThunkableWebviewerExtension.postMessage(input);
       }
     </script>
   </head>
   <body>
-    <h2>Hello Tunkable Test</h2>
+    <h2>Tunkable WebViewer Test</h2>
     <input type="text" id="userInput" placeholder="Type something...">
-    <button onclick="respondToMessage()">Send</button>
+    <button onclick="sendMessageToApp()">Send</button>
     <p id="response"></p>
   </body>
 </html>
+
