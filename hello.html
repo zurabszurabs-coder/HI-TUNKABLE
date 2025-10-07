@@ -2,46 +2,32 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Hello Tunkable Test</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #response { margin-top: 10px; padding: 10px; border: 1px solid #ccc; width: 300px; white-space: pre-line; }
-    input, button { padding: 5px; margin-top: 5px; }
-  </style>
+  <title>Thunkable Auto Reply</title>
+  <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js"></script>
 </head>
 <body>
-  <h2>Hello Tunkable Test</h2>
-
-  <label for="messageInput">Type something...</label><br>
-  <input type="text" id="messageInput" placeholder="Type something...">
-  <button id="sendBtn">Send</button>
-
-  <div id="response">Response will appear here</div>
+  <h2>Thunkable Auto Reply Test</h2>
+  <p id="response">Waiting for message...</p>
 
   <script>
-    function handleMessage(message) {
-      const responseDiv = document.getElementById("response");
-      responseDiv.innerText = "App said: " + message;
+    document.addEventListener("DOMContentLoaded", function() {
+      // მიიღოს მესიჯი Tunkable აპიდან
+      ThunkableWebviewerExtension.receiveMessage(function(message) {
+        const responseDiv = document.getElementById("response");
+        responseDiv.innerText = "App said: " + message;
 
-      if (message.toLowerCase() === "hello") {
-        responseDiv.innerText += "\nResponse: Hi Thunkable";
-      } else {
-        responseDiv.innerText += "\nResponse: error";
-      }
-    }
+        // ავტომატური პასუხი
+        if (message === "hello") {
+          ThunkableWebviewerExtension.postMessage("Hi Thunkable");
+        } else {
+          ThunkableWebviewerExtension.postMessage("error");
+        }
+      });
 
-    document.getElementById("sendBtn").addEventListener("click", function() {
-      const msg = document.getElementById("messageInput").value.trim();
-      if(msg) handleMessage(msg);
-      document.getElementById("messageInput").value = "";
-    });
-
-    document.getElementById("messageInput").addEventListener("keydown", function(e) {
-      if(e.key === "Enter") {
-        const msg = this.value.trim();
-        if(msg) handleMessage(msg);
-        this.value = "";
-      }
+      // ტესტური შეტყობინება WebViewer-ის ჩატვირთვის შემდეგ
+      setTimeout(function() {
+        ThunkableWebviewerExtension.postMessage("WebView loaded successfully");
+      }, 1000);
     });
   </script>
 </body>
