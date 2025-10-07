@@ -3,8 +3,20 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello Tunkable Test</title>
+    <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js"></script>
     <script>
-      // ეს JS კოდი აკონტროლებს მესიჯს
+      // მესიჯის მიღება აპიდან
+      ThunkableWebviewerExtension.receiveMessage(function(message) {
+        alert("Message from App: " + message);
+      });
+
+      // მესიჯის გაგზავნა აპში
+      function sendMessageToApp() {
+        const input = document.getElementById("userInput").value.trim();
+        ThunkableWebviewerExtension.postMessage(input);
+      }
+
+      // ასევე, შიდა პასუხი ვებსაიტზე
       function respondToMessage() {
         const input = document.getElementById("userInput").value.trim().toLowerCase();
         const output = document.getElementById("response");
@@ -14,6 +26,9 @@
         } else {
           output.innerText = "Type 'hello' to get a response.";
         }
+
+        // აპში მესიჯის გაგზავნა
+        ThunkableWebviewerExtension.postMessage(input);
       }
     </script>
   </head>
