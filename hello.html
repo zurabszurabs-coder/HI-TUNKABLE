@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello Tunkable Test</title>
+    <script>
+      // ეს JS კოდი აკონტროლებს მესიჯს
+      function respondToMessage() {
+        const input = document.getElementById("userInput").value.trim().toLowerCase();
+        const output = document.getElementById("response");
+
+        if (input === "hello") {
+          output.innerText = "Hi Tunkable!";
+        } else {
+          output.innerText = "Type 'hello' to get a response.";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h2>Hello Tunkable Test</h2>
+    <input type="text" id="userInput" placeholder="Type something...">
+    <button onclick="respondToMessage()">Send</button>
+    <p id="response"></p>
+  </body>
+</html>
