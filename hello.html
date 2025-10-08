@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Thunkable Auto Reply</title>
-  <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js"></script>
+<meta charset="UTF-8">
+<title>Auto Reply JSON</title>
+<script>
+  // Simple JSON auto reply server simulation
+  async function handleRequest() {
+    const params = new URLSearchParams(window.location.search);
+    const message = params.get("message");
+
+    let reply;
+    if (message === "hello") {
+      reply = { reply: "Hi Thunkable" };
+    } else {
+      reply = { reply: "error" };
+    }
+
+    document.body.innerText = JSON.stringify(reply);
+  }
+
+  handleRequest();
+</script>
 </head>
-<body>
-  <h2>Thunkable Auto Reply Test</h2>
-  <p id="response">Waiting for message...</p>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // მიიღოს მესიჯი Tunkable აპიდან
-      ThunkableWebviewerExtension.receiveMessage(function(message) {
-        const responseDiv = document.getElementById("response");
-        responseDiv.innerText = "App said: " + message;
-
-        // ავტომატური პასუხი
-        if (message === "hello") {
-          ThunkableWebviewerExtension.postMessage("Hi Thunkable");
-        } else {
-          ThunkableWebviewerExtension.postMessage("error");
-        }
-      });
-
-      // ტესტური შეტყობინება WebViewer-ის ჩატვირთვის შემდეგ
-      setTimeout(function() {
-        ThunkableWebviewerExtension.postMessage("WebView loaded successfully");
-      }, 1000);
-    });
-  </script>
-</body>
+<body></body>
 </html>
